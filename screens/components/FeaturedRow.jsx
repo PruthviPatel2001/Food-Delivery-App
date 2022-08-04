@@ -23,7 +23,7 @@ const FeaturedRow = ({ title, description, featuredCategory }) => {
         {/* cards */}
         <RestarantsCard
           id={123}
-          imgUrl="https://links.papareact.com/gn7"
+          imgUrl="https://images.unsplash.com/photo-1631452180539-96aca7d48617?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8aW5kaWFuZm9vZHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60"
           title="Olive Pizza"
           rating="4.5"
           genre="Italian"
