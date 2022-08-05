@@ -4,15 +4,47 @@ import {
   SearchIcon,
   UserIcon,
 } from "react-native-heroicons/outline";
-import { Image, SafeAreaView, ScrollView, Text, TextInput, View } from "react-native";
-import React, { useLayoutEffect } from "react";
+import {
+  Image,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 
 import Categories from "./components/Categories";
 import FeaturedRow from "./components/FeaturedRow";
+import sanityClient from "../sanity";
 import { useNavigation } from "@react-navigation/native";
 
 const Home = () => {
   const navigation = useNavigation();
+  const [featuredCategories, setfeaturedCategories] = useState([]);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `
+*[_type=="featured"]{
+  ...,
+  restaurants[] -> {
+     ...,
+    dishes[]->,
+  
+  }
+  
+}
+`
+      )
+      .then((data) => {
+        console.log(data);
+        setfeaturedCategories(data);
+      });
+  }, []);
+
+  console.log("featuredCategories", featuredCategories);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -49,39 +81,49 @@ const Home = () => {
         <AdjustmentsIcon color="#00CCBB" />
       </View>
 
-       {/* content  */}
+      {/* content  */}
 
-       <ScrollView className="bg-gray-100 "
-        contentContainerStyle ={{
-            paddingBottom:100
+      <ScrollView
+        className="bg-gray-100 "
+        contentContainerStyle={{
+          paddingBottom: 100,
         }}
-       >
-           {/* categories */}
-           <Categories />
+      >
+        {/* categories */}
+        <Categories />
 
-           {/* feature rows */}
-           <FeaturedRow
-            title="Featured"
-            id={1}
-            description = "Paid placements from our partners"
-            featuredCategory = "Featured"
-           />
-            <FeaturedRow
-            title="Offers for the day"
-            id={2}
+        {featuredCategories.map((category,i)=>{
+        
+        const {name,_id,} = category
 
-            description = "Exclusive offers! Grab it now..."
-            featuredCategory = "Featured"
-           />
-            <FeaturedRow
-            title="Famous Near You"
-            id={3}
+        return(
+        <FeaturedRow
+          title={name}
+          key={_id}
+          id={_id}
+          description="Paid placements from our partners"
+          featuredCategory="Featured"
+        />
 
-            description = "Must to have once"
-            featuredCategory = "Featured"
-           />
-       </ScrollView>
+        )
+ 
 
+        })}
+
+        {/* feature rows */}
+        <FeaturedRow
+          title="Offers for the day"
+          id={2}
+          description="Exclusive offers! Grab it now..."
+          featuredCategory="Featured"
+        />
+        <FeaturedRow
+          title="Famous Near You"
+          id={3}
+          description="Must to have once"
+          featuredCategory="Featured"
+        />
+      </ScrollView>
     </SafeAreaView>
   );
 };
