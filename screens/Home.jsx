@@ -14,8 +14,8 @@ import {
 } from "react-native";
 import React, { useEffect, useLayoutEffect, useState } from "react";
 
-import Categories from "./components/Categories";
-import FeaturedRow from "./components/FeaturedRow";
+import Categories from "../components/Categories";
+import FeaturedRow from "../components/FeaturedRow";
 import sanityClient from "../sanity";
 import { useNavigation } from "@react-navigation/native";
 
@@ -27,16 +27,15 @@ const Home = () => {
     sanityClient
       .fetch(
         `
-*[_type=="featured"]{
-  ...,
-  restaurants[] -> {
-     ...,
-    dishes[]->,
+         *[_type=="featured"]{
+             ...,
+             restaurants[] -> {
+                ...,
+                dishes[]->,
   
-  }
+              }
   
-}
-`
+          }`
       )
       .then((data) => {
         console.log(data);
@@ -92,37 +91,19 @@ const Home = () => {
         {/* categories */}
         <Categories />
 
-        {featuredCategories.map((category,i)=>{
-        
-        const {name,_id,} = category
+        {featuredCategories.map((category, i) => {
+          const { name, _id, short_description } = category;
 
-        return(
-        <FeaturedRow
-          title={name}
-          key={_id}
-          id={_id}
-          description="Paid placements from our partners"
-          featuredCategory="Featured"
-        />
-
-        )
- 
-
+          return (
+            <FeaturedRow
+              title={name}
+              key={_id}
+              id={_id}
+              description={short_description}
+              featuredCategory="Featured"
+            />
+          );
         })}
-
-        {/* feature rows */}
-        <FeaturedRow
-          title="Offers for the day"
-          id={2}
-          description="Exclusive offers! Grab it now..."
-          featuredCategory="Featured"
-        />
-        <FeaturedRow
-          title="Famous Near You"
-          id={3}
-          description="Must to have once"
-          featuredCategory="Featured"
-        />
       </ScrollView>
     </SafeAreaView>
   );
