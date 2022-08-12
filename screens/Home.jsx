@@ -38,12 +38,10 @@ const Home = () => {
           }`
       )
       .then((data) => {
-        console.log(data);
         setfeaturedCategories(data);
       });
   }, []);
 
-  console.log("featuredCategories", featuredCategories);
 
   useLayoutEffect(() => {
     navigation.setOptions({
