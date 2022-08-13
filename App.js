@@ -1,8 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 
 import Basket from "./screens/Basket";
+import Delivery from "./screens/Delivery";
 import Home from "./screens/Home";
 import { NavigationContainer } from "@react-navigation/native";
+import PrepareOrder from "./screens/PrepareOrder";
 import { Provider } from "react-redux";
 import Restaurant from "./screens/Restaurant";
 import { TailwindProvider } from "tailwindcss-react-native";
@@ -24,6 +26,22 @@ export default function App() {
               component={Basket}
               options={{
                 presentation: "modal",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="PreparationOrder"
+              component={PrepareOrder}
+              options={{
+                presentation: "fullScreenModal",
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="Delivery"
+              component={Delivery}
+              options={{
+                presentation: "fullScreenModal",
                 headerShown: false,
               }}
             />
