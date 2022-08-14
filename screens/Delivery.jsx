@@ -1,4 +1,4 @@
-import * as Progress from 'react-native-progress';
+import * as Progress from "react-native-progress";
 
 import {
   Image,
@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import MapView,{Marker} from 'react-native-maps';
+import MapView, { Marker } from "react-native-maps";
 
 import React from "react";
 import { XIcon } from "react-native-heroicons/outline";
@@ -19,7 +19,7 @@ const Delivery = () => {
   const navigation = useNavigation();
   const restaurant = useSelector(selectRestaurant);
 
-  console.log('restaurant',restaurant)
+  console.log("restaurant", restaurant.lat ,"=> long",restaurant.long);
 
   return (
     <View className="bg-[#00CCBB] flex-1">
@@ -45,26 +45,23 @@ const Delivery = () => {
           </View>
           <Progress.Bar size={30} color="#00CCBB" indeterminate={true} />
           <Text className="mt-3 text-gray-500">
-             Your order is being prepared !!
+            Your order is being prepared !!
           </Text>
         </View>
       </SafeAreaView>
 
-      <View>
-
-      <MapView
-        initialRegion={{
+      <View className="flex-1">
+        <MapView
+          initialRegion={{
             latitude:restaurant.lat,
             longitude:restaurant.long,
             latitudeDelta:0.005,
             longitudeDelta:0.005
-        }}
-        className="flex-1 mt-10 z-0"
-        mapType='mutedStandard'
-      >
-
-      </MapView>
-
+         
+          }}
+          className="flex-1 mt-5 z-0 "
+          mapType="mutedStandard"
+        ></MapView>
       </View>
     </View>
   );

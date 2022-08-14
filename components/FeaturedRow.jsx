@@ -49,7 +49,7 @@ const FeaturedRow = ({ id, title, description, featuredCategory }) => {
 
         {restaurants.map((val) => {
 
-          const {_id,image,address,name,dishes,rating,short_description,type} = val
+          const {_id,image,address,name,dishes,rating,short_description,type,lat,long} = val
 
           return(
 
@@ -63,8 +63,8 @@ const FeaturedRow = ({ id, title, description, featuredCategory }) => {
             address={address}
             short_description={short_description}
             dishes={dishes}
-            long={20}
-            lat={0}
+            long={long}
+            lat={lat}
           />
           )
         })}
